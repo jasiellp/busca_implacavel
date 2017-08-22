@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat"></link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+ 
+<style>
+body,h1 {
+	font-family: "Raleway", sans-serif
+}
+body, html {
+	height: 100%
+}
+.bgimg {
+    background-image: url('img/img.jpg');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}  
+.menu .ui-selectonemenu-label { 
+    background: #FFFFF0;
+}
+.panel .ui-selectonemenu-list { 
+    background: #FFFFF0;
+}
+  
+</style>
+	<title>Search Product</title>
+</h:head>
+
+<h:body>
+
+<div class="bgimg ">
+   
+ 
+     
+    <h:form> 
+		
+ 
+		<p:panel visible="true" style="width:350px; margin-bottom:2cm; background-color: transparent !important; "  >
+			
+			<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
+			
+			<p:outputLabel id="tipo_label" value="Tipo: "   />
+				 
+				<h:selectOneMenu id="tipo" value="#{dropdownView.tipo}"  style="height:35px; width:180px; background-color: transparent !important;"   styleClass="form-control"   >
+					<p:ajax listener="#{dropdownView.onTipoChange}" 		update="marca, modelo,ano_de_ ,painelResultado"   />
+					<f:selectItem itemLabel="Selecione" itemValue="" 		noSelectionOption="true" />
+					<f:selectItems value="#{dropdownView.tipos}" />
+				</h:selectOneMenu>
+			     
+			
+				<p:outputLabel id="marca_label" value="Marca: "  />
+				<h:selectOneMenu id="marca" value="#{dropdownView.marca}"   effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;"  >
+					<p:ajax listener="#{dropdownView.onMarcaChange}" 		update="modelo,ano_de_ ,painelResultado" />
+					<f:selectItem itemLabel="Selecione" itemValue="" 		noSelectionOption="true" />
+					<f:selectItems value="#{dropdownView.marcas}" />
+				</h:selectOneMenu>
+				
+
+				<p:outputLabel id="modelo_label" value="Modelo: "   />
+				<h:selectOneMenu id="modelo" value="#{dropdownView.modelo}" effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;"  >
+					<p:ajax listener="#{dropdownView.onModeloChange}" 		update="ano_de_,painelResultado" />
+					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{dropdownView.modelos}" />
+				</h:selectOneMenu>
+				
+				
+				<p:outputLabel id="ano_de_label" value="Ano De: " />
+				<h:selectOneMenu id="ano_de_" value="#{dropdownView.ano_de}"  effect="fade" var="q" style="height:35px; width:180px; background-color: transparent !important;"  >
+					
+					<f:selectItem itemLabel="Selecione" itemValue=""  />
+					<f:selectItems value="#{dropdownView.anos_de}" noSelectionOption="true" />
+				</h:selectOneMenu>
+				
+				 
+
+			</h:panelGrid>
+
+			<p:separator />
+
+			<p:commandButton value="Consultar" update="ano_modelo_label_, marca_modelo_label_ , painelResultado" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" styleClass="button" />
+			
+		</p:panel>
+		 
+		<p:panel id="painelResultado" visible="#{dropdownView.vizivel}"  style="width:450px; margin-bottom:2cm; background-color: transparent !important; " align="Right">
+			
+			<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
+					
+					<p:outputLabel id="ano_modelo_label" value="Ano Modelo: "   />
+			 		<p:outputLabel id="ano_modelo_label_" value="#{dropdownView.labelAno}"  />
+			 		
+			 		<p:outputLabel id="marca_modelo_label" value="Marca: "   />
+			 		<p:outputLabel id="marca_modelo_label_" value="#{dropdownView.labelMarca}"   />
+			 		
+			 		<p:outputLabel id="nome_modelo_label" value="Nome Modelo: "   />
+			 		<p:outputLabel id="nome_modelo_label_" value="#{dropdownView.labelModelo}"   />
+			 		
+			 		<p:outputLabel id="preco_modelo_label" value="Preço Modelo: "   />
+			 		<p:outputLabel id="preco_modelo_label_" value="#{dropdownView.labelPreco}"   />
+			 		
+			 		<p:outputLabel id="combustivel_modelo_label" value="Combustivel : "   />
+			 		<p:outputLabel id="combustivel_modelo_label_" value="#{dropdownView.labelCombustivel}"   />
+			 		 
+
+			</h:panelGrid> 
+			 
+		</p:panel>
+			 
+ </h:form> 
+   
+     
+    <p class="w3-large w3-center">Jasiel</p>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large"> Poder do <a href="https://www.w3schools.com/w3css/default.asp" target="_blank"> _</a>
+  </div>
+
+	  
+</h:body>
+</html>
