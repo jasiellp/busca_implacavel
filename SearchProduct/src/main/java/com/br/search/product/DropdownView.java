@@ -51,6 +51,7 @@ public class DropdownView implements Serializable
 
 	 
 
+	@SuppressWarnings("restriction")
 	@PostConstruct
 	public void init()
 	{

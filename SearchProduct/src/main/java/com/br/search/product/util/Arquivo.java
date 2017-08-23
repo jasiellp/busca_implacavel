@@ -39,7 +39,7 @@ public class Arquivo
 
   private static ArrayList<MarcaVeiculo> getMarca(String sTipoVeiculo)
   {
-    ArrayList<MarcaVeiculo> listaMarcas = new ArrayList();
+    ArrayList<MarcaVeiculo> listaMarcas = new ArrayList<MarcaVeiculo>();
     
     try
     {
@@ -126,7 +126,7 @@ public class Arquivo
 
   private static ArrayList<ModeloVeiculo> getModelo(String sTipoVeiculo, String sId)
   {
-    ArrayList<ModeloVeiculo> listaModelos = new ArrayList();
+    ArrayList<ModeloVeiculo> listaModelos = new ArrayList<ModeloVeiculo>();
     
 
     try
@@ -190,7 +190,7 @@ public class Arquivo
 
   private static ArrayList<ModeloAnoVeiculo> getDetalheModelo(String sTipoVeiculo, String sId, String sIdModelo)
   {
-    ArrayList<ModeloAnoVeiculo> listaMarcas = new ArrayList();
+    ArrayList<ModeloAnoVeiculo> listaMarcas = new ArrayList<ModeloAnoVeiculo>();
     
 
 
