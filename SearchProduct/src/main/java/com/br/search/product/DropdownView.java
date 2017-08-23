@@ -13,6 +13,7 @@ import com.br.search.product.util.Arquivo;
 import com.br.search.product.util.MarcaVeiculo;
 import com.br.search.product.util.ModeloAnoVeiculo;
 import com.br.search.product.util.ModeloVeiculo;
+ 
 
 @ManagedBean
 @ViewScoped
@@ -53,14 +54,14 @@ public class DropdownView implements Serializable
  
 	@PostConstruct
 	public void init()
-	{
-		/*try
+	{ 
+		/* try
 		{
 			WebLog.NovoLog("Aplicacao", Sessao.retrieveSessionId());
 		}
 		catch (Exception e)
 		{
-		}*/
+		}  */
 		
 		
 		tipos = new ArrayList<String>();
