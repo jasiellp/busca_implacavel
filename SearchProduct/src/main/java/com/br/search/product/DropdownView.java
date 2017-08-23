@@ -62,6 +62,7 @@ public class DropdownView implements Serializable
 		{
 		}*/
 		
+		
 		tipos = new ArrayList<String>();
 		marcas = new ArrayList<String>();
 		modelos = new ArrayList<String>();
