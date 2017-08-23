@@ -51,6 +51,13 @@
             <scope>provided</scope>
         </dependency>
         
+    <!--     <dependency>
+            <groupId>br.com.web.util</groupId>
+            <artifactId>Web_Util</artifactId>
+            <version>0.0.1</version>
+            <systemPath>${project.build.directory}/target/Web_Util-0.0.1.jar</systemPath>
+        </dependency> -->
+        
         <!-- || DEPENDÊNCIAS DO JAVA SERVER FACES || -->                        
         <!-- ############## JSF-API ################ -->
         <dependency>

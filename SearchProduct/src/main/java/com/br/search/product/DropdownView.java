@@ -50,11 +50,18 @@ public class DropdownView implements Serializable
 	private String sIdModelo;
 
 	 
-
-	@SuppressWarnings("restriction")
+ 
 	@PostConstruct
 	public void init()
 	{
+		/*try
+		{
+			WebLog.NovoLog("Aplicacao", Sessao.retrieveSessionId());
+		}
+		catch (Exception e)
+		{
+		}*/
+		
 		tipos = new ArrayList<String>();
 		marcas = new ArrayList<String>();
 		modelos = new ArrayList<String>();
