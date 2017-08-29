@@ -9,39 +9,40 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import com.br.search.product.dao.CotacaoVeiculoDao;
 import com.br.search.product.util.Arquivo;
 import com.br.search.product.util.MarcaVeiculo;
 import com.br.search.product.util.ModeloAnoVeiculo;
 import com.br.search.product.util.ModeloVeiculo;
- 
+import com.br.search.product.util.Sessao;
+import com.br.search.product.util.WebLog;
 
 @ManagedBean
 @ViewScoped
 public class DropdownView implements Serializable
 {
 	private static final long serialVersionUID = -5217446585419927326L;
-	
-	
+
 	private Map<String, ArrayList<MarcaVeiculo>> data = new HashMap<String, ArrayList<MarcaVeiculo>>();
 	private Map<String, ArrayList<ModeloVeiculo>> data_modelo = new HashMap<String, ArrayList<ModeloVeiculo>>();
 	private Map<String, ArrayList<ModeloAnoVeiculo>> modelo_ano = new HashMap<String, ArrayList<ModeloAnoVeiculo>>();
 
+	private Double valor_de  = new Double(0);
+	private Double valor_ate = new Double(0);
+
 	private String tipo;
-
 	private String marca;
-
 	private String modelo;
-
 	private String ano_de;
+	private String ano_ate;
 
 	private ArrayList<String> marcas;
-
 	private ArrayList<String> modelos;
-
 	private ArrayList<String> anos_de;
-
 	private ArrayList<String> tipos;
+
 	private boolean vizivel;
+
 	private String labelAno;
 	private String labelMarca;
 	private String labelModelo;
@@ -50,41 +51,70 @@ public class DropdownView implements Serializable
 	private String sId;
 	private String sIdModelo;
 
-	 
- 
+	private Cotacao cotacao = new Cotacao();
+
 	@PostConstruct
 	public void init()
-	{ 
-		/* try
+	{
+		try
 		{
 			WebLog.NovoLog("Aplicacao", Sessao.retrieveSessionId());
+
+			valor_de  = 0d;
+			valor_ate = 0d;
+
+			tipos = new ArrayList<String>();
+			marcas = new ArrayList<String>();
+			modelos = new ArrayList<String>();
+			anos_de = new ArrayList<String>();
+
+			tipos.add("Carro");
+			tipos.add("Moto");
+			tipos.add("Caminhao");
+
+			if (data.get("Carro") == null)
+			{
+				data.put("Carro", CotacaoVeiculoDao.getMarcaCarros());
+			}
+			if (data.get("Moto") == null)
+			{
+				data.put("Moto", CotacaoVeiculoDao.getMarcaMotos());
+			}
+			if (data.get("Caminhao") == null)
+			{
+				data.put("Caminhao", CotacaoVeiculoDao.getMarcaCaminhoes());
+			}
 		}
 		catch (Exception e)
 		{
-		}  */
-		
-		
-		tipos = new ArrayList<String>();
-		marcas = new ArrayList<String>();
-		modelos = new ArrayList<String>();
-		anos_de = new ArrayList<String>();
+			try
+			{
+				WebLog.logErro(e);
+			} catch (Exception e1)
+			{
 
-		tipos.add("Carro");
-		tipos.add("Moto");
-		tipos.add("Caminhao");
+			}
+		}
+	}
 
-		if (data.get("Carro") == null)
-		{
-			data.put("Carro", Arquivo.getMarcaCarros());
-		}
-		if (data.get("Moto") == null)
-		{
-			data.put("Moto", Arquivo.getMarcaMotos());
-		}
-		if (data.get("Caminhao") == null)
-		{
-			data.put("Caminhao", Arquivo.getMarcaCaminhoes());
-		}
+	public Double getValorAte()
+	{
+		return valor_ate;
+	}
+
+	public void setValorAte(Double input1)
+	{
+		this.valor_ate = input1;
+	}
+
+	public Double getValorDe()
+	{
+		return valor_de;
+	}
+
+	public void setValorDe(Double input1)
+	{
+		this.valor_de = input1;
 	}
 
 	public Map<String, ArrayList<MarcaVeiculo>> getData()
@@ -254,102 +284,102 @@ public class DropdownView implements Serializable
 
 	public void onMarcaChange()
 	{
-		 
-		if ((marca != null) && (!marca.equals("")))
+		try
 		{
-			if ((tipo != null) && (!tipo.equals("")))
+			if ((marca != null) && (!marca.equals("")))
 			{
-				 
-				 
-				if (tipo.equalsIgnoreCase("Carro"))
+				if ((tipo != null) && (!tipo.equals("")))
 				{
-					ArrayList<MarcaVeiculo> aVeiculo =   data.get(tipo);
 
-					String sId = null;
-
-					for (MarcaVeiculo mveiculo :aVeiculo)
+					if (tipo.equalsIgnoreCase("Carro"))
 					{
-					 
+						ArrayList<MarcaVeiculo> aVeiculo = data.get(tipo);
 
-						if (mveiculo.getNomeMarca().equalsIgnoreCase(marca))
+						String sId = null;
+
+						for (MarcaVeiculo mveiculo : aVeiculo)
 						{
-							sId = mveiculo.getIdMarca();
-							break;
+							if (mveiculo.getNomeMarca().equalsIgnoreCase(marca))
+							{
+								sId = mveiculo.getIdMarca();
+								break;
+							}
 						}
-					}
 
-					ArrayList<ModeloVeiculo>	aModelo = Arquivo.getModeloCarro(sId);
+						ArrayList<ModeloVeiculo> aModelo = CotacaoVeiculoDao.getModeloCarro(sId);
 
-					data_modelo.put(marca, aModelo);
-
-					for (ModeloVeiculo MVeiculo :  aModelo)
-					{
-						modelos.add(MVeiculo.getNomeModelo());
-					}
-				}
-				
-
-				
-				if (tipo.equalsIgnoreCase("Moto"))
-				{
-					ArrayList<MarcaVeiculo> aVeiculo =  data.get(tipo);
-
-					String sId = null;
-
-					for (MarcaVeiculo marca_ :aVeiculo)
-					{
+						data_modelo.put(marca, aModelo);
 						 
-
-						if (marca_.getNomeMarca().equalsIgnoreCase(marca))
-						{
-							sId = marca_.getIdMarca();
-							break;
+						for (ModeloVeiculo MVeiculo : aModelo)
+						{ 
+							modelos.add(MVeiculo.getNomeModelo());
 						}
 					}
 
-					ArrayList<ModeloVeiculo> aModelo = Arquivo.getModeloMoto(sId);
-
-					data_modelo.put(marca, aModelo);
-					
-					for (ModeloVeiculo MVeiculo :  aModelo)
+					if (tipo.equalsIgnoreCase("Moto"))
 					{
-						modelos.add(MVeiculo.getNomeModelo());
-					}
-				}
-				if (tipo.equalsIgnoreCase("Caminhao"))
-				{
-					ArrayList<MarcaVeiculo> aVeiculo = data.get(tipo);
+						ArrayList<MarcaVeiculo> aVeiculo = data.get(tipo);
 
-					String sId = null;
+						String sId = null;
 
-					for (MarcaVeiculo marca_:aVeiculo)
-					{
-					
-
-						if (marca_.getNomeMarca().equalsIgnoreCase(marca))
+						for (MarcaVeiculo marca_ : aVeiculo)
 						{
-							sId = marca_.getIdMarca();
-							break;
+
+							if (marca_.getNomeMarca().equalsIgnoreCase(marca))
+							{
+								sId = marca_.getIdMarca();
+								break;
+							}
+						}
+
+						ArrayList<ModeloVeiculo> aModelo = CotacaoVeiculoDao.getModeloMoto(sId);
+
+						data_modelo.put(marca, aModelo);
+						modelos.clear();
+						modelos = new ArrayList<String>();
+						for (ModeloVeiculo MVeiculo : aModelo)
+						{
+							modelos.add(MVeiculo.getNomeModelo());
 						}
 					}
-
-					ArrayList<ModeloVeiculo> aModelo = Arquivo.getModeloCaminhao(sId);
-
-					modelos.clear();
-					modelos = new ArrayList<String>();
-					data_modelo.put(marca, aModelo);
-					for (ModeloVeiculo MVeiculo :  aModelo)
+					if (tipo.equalsIgnoreCase("Caminhao"))
 					{
-						modelos.add(MVeiculo.getNomeModelo());
-					}
+						ArrayList<MarcaVeiculo> aVeiculo = data.get(tipo);
 
+						String sId = null;
+
+						for (MarcaVeiculo marca_ : aVeiculo)
+						{
+
+							if (marca_.getNomeMarca().equalsIgnoreCase(marca))
+							{
+								sId = marca_.getIdMarca();
+								break;
+							}
+						}
+
+						ArrayList<ModeloVeiculo> aModelo = CotacaoVeiculoDao.getModeloCaminhao(sId);
+
+						modelos.clear();
+						modelos = new ArrayList<String>();
+						data_modelo.put(marca, aModelo);
+						for (ModeloVeiculo MVeiculo : aModelo)
+						{
+							modelos.add(MVeiculo.getNomeModelo());
+						}
+
+					}
 				}
+			} 
+			else
+			{
+				modelos = new ArrayList<String>();
 			}
-		}
-		else
+		} catch (Exception e)
 		{
-			modelos = new ArrayList<String>();
+
 		}
+
 	}
 
 	private void clean()
@@ -382,7 +412,7 @@ public class DropdownView implements Serializable
 				marcas.add(MVeiculo.getNomeMarca());
 			}
 
-		}
+		} 
 		else
 		{
 			modelos = new ArrayList<String>();
@@ -398,194 +428,201 @@ public class DropdownView implements Serializable
 	}
 
 	public void onModeloChange()
-	{ 
-		if ((modelo != null) && (!modelo.equals("")))
+	{
+		
+		
+		try
 		{
-			
-			String sTipoVeiculo = null,sId_="";
+			if ((modelo != null) && (!modelo.equals("")))
+			{
 
-			anos_de = new ArrayList<String>();
+				String sId_modelo = null, sId_marca = "";
 
-			if ((tipo != null) && (!tipo.equals("")))
-			{ 
-				 
-				if (tipo.equalsIgnoreCase("Carro"))
+				anos_de = new ArrayList<String>();
+
+				if ((tipo != null) && (!tipo.equals("")))
 				{
-					 ArrayList<MarcaVeiculo> aVeiculo_ = data.get(tipo);
 
-				 
-
-					loop : for (MarcaVeiculo mv_ : aVeiculo_)
+					if (tipo.equalsIgnoreCase("Carro"))
 					{
-						 if(mv_.getNomeMarca().equalsIgnoreCase(marca))
-						 {
-							 sId_ = mv_.getIdMarca();	
-							 break;
-						 }
-					}
+						ArrayList<MarcaVeiculo> aMarcas = data.get(tipo);
 
-					ArrayList<ModeloVeiculo>	aVeiculoModelo =   data_modelo.get(marca);
-
-					
-
-					for (ModeloVeiculo MVeiculo: aVeiculoModelo)
-					{
-						 
-
-						if (MVeiculo.getNomeModelo().equalsIgnoreCase(modelo))
+						loop : for (MarcaVeiculo marca_local : aMarcas)
 						{
-							sTipoVeiculo = MVeiculo.getIdModelo();
-							break;
+							if (marca_local.getNomeMarca().equalsIgnoreCase(marca))
+							{
+								sId_marca = marca_local.getIdMarca();
+								break loop;
+							}
+						}
+
+						ArrayList<ModeloVeiculo> aVeiculoModelo = data_modelo.get(marca);
+
+						loop : for (ModeloVeiculo MVeiculo : aVeiculoModelo)
+						{
+
+							if (MVeiculo.getNomeModelo().equalsIgnoreCase(modelo))
+							{
+								sId_modelo = MVeiculo.getIdModelo();
+								
+								break loop;
+							}
+						}
+
+						setsIdModelo(sId_modelo);
+						setsId(sId_marca);
+						ArrayList<ModeloAnoVeiculo> aModelo = CotacaoVeiculoDao.getModeloAno(sId_marca, sId_modelo);
+
+						anos_de.clear();
+						anos_de = new ArrayList<String>();
+						modelo_ano.put(modelo, aModelo);
+
+						for (ModeloAnoVeiculo MVeiculo : aModelo)
+						{
+							anos_de.add(MVeiculo.getNomeModelo());
 						}
 					}
 
-					setsIdModelo(sTipoVeiculo);
-					setsId(sId_);
-					ArrayList<ModeloAnoVeiculo> aModelo = Arquivo.getModeloAnoCarro(sId, sTipoVeiculo);
-
-					anos_de.clear();
-					anos_de = new ArrayList<String>();
-					modelo_ano.put(modelo, aModelo);
-
-					for (ModeloAnoVeiculo MVeiculo :   aModelo)
+					ArrayList<ModeloVeiculo> aVeiculoModelo;
+					ArrayList<ModeloAnoVeiculo> aModelo;
+					if (tipo.equalsIgnoreCase("Moto"))
 					{
-						anos_de.add(MVeiculo.getNomeModelo());
-					}
-				}
-				 
-				ArrayList<ModeloVeiculo> aVeiculoModelo;
-				ArrayList<ModeloAnoVeiculo> aModelo;
-				if (tipo.equalsIgnoreCase("Moto"))
-				{
-					ArrayList<MarcaVeiculo> aVeiculo =   data.get(tipo);
+						ArrayList<MarcaVeiculo> aVeiculo = data.get(tipo);
 
-					 
-
-					for (MarcaVeiculo MVeiculo:  aVeiculo)
-					{
- 
-
-						if (MVeiculo.getNomeMarca().equalsIgnoreCase(marca))
+						for (MarcaVeiculo MVeiculo : aVeiculo)
 						{
-							sId_ = MVeiculo.getIdMarca();
-							break;
+
+							if (MVeiculo.getNomeMarca().equalsIgnoreCase(marca))
+							{
+								sId_marca = MVeiculo.getIdMarca();
+								break;
+							}
+						}
+
+						aVeiculoModelo = data_modelo.get(marca);
+
+						for (ModeloVeiculo MVeiculo : aVeiculoModelo)
+						{
+
+							if (MVeiculo.getNomeModelo().equalsIgnoreCase(modelo))
+							{
+								sId_modelo = MVeiculo.getIdModelo();
+								break;
+							}
+						}
+
+						setsIdModelo(sId_modelo);
+						setsId(sId);
+						aModelo = Arquivo.getModeloAnoMoto(sId, sId_modelo);
+
+						anos_de.clear();
+						anos_de = new ArrayList<String>();
+						modelo_ano.put(modelo, aModelo);
+						for (ModeloAnoVeiculo MVeiculo : aModelo)
+						{
+							anos_de.add(MVeiculo.getNomeModelo());
 						}
 					}
 
-					aVeiculoModelo =   data_modelo.get(marca);
-
-					 
-
-					for (ModeloVeiculo MVeiculo: aVeiculoModelo)
+					if (tipo.equalsIgnoreCase("Caminhao"))
 					{
-						
+						ArrayList<MarcaVeiculo> aVeiculo = data.get(tipo);
 
-						if (MVeiculo.getNomeModelo().equalsIgnoreCase(modelo))
+						String sId = null;
+
+						for (MarcaVeiculo MVeiculo : aVeiculo)
 						{
-							sTipoVeiculo = MVeiculo.getIdModelo();
-							break;
+
+							if (MVeiculo.getNomeMarca().equalsIgnoreCase(marca))
+							{
+								sId = MVeiculo.getIdMarca();
+								break;
+							}
 						}
-					}
 
-					setsIdModelo(sTipoVeiculo);
-					setsId(sId);
-					aModelo = Arquivo.getModeloAnoMoto(sId, sTipoVeiculo);
+						aVeiculoModelo = data_modelo.get(marca);
 
-					anos_de.clear();
-					anos_de = new ArrayList<String>();
-					modelo_ano.put(modelo, aModelo);
-					for (ModeloAnoVeiculo MVeiculo :  aModelo)
-					{
-						anos_de.add(MVeiculo.getNomeModelo());
-					}
-				}
-
-				if (tipo.equalsIgnoreCase("Caminhao"))
-				{
-					ArrayList<MarcaVeiculo> aVeiculo =  data.get(tipo);
-
-					String sId = null;
-
-					for (MarcaVeiculo MVeiculo :aVeiculo)
-					{
-						 
-						if (MVeiculo.getNomeMarca().equalsIgnoreCase(marca))
+						for (ModeloVeiculo MVeiculo : aVeiculoModelo)
 						{
-							sId = MVeiculo.getIdMarca();
-							break;
+
+							if (MVeiculo.getNomeModelo().equalsIgnoreCase(modelo))
+							{
+								sId_modelo = MVeiculo.getIdModelo();
+								break;
+							}
 						}
-					}
 
-					  aVeiculoModelo =  data_modelo.get(marca);
- 
+						setsIdModelo(sId_modelo);
+						setsId(sId);
+						aModelo = Arquivo.getModeloAnoCaminhao(sId, sId_modelo);
 
-					for ( ModeloVeiculo MVeiculo: aVeiculoModelo)
-					{
-						 
-						if (MVeiculo.getNomeModelo().equalsIgnoreCase(modelo))
+						anos_de.clear();
+						anos_de = new ArrayList<String>();
+						modelo_ano.put(modelo, aModelo);
+						for (ModeloAnoVeiculo MVeiculo : aModelo)
 						{
-							sTipoVeiculo = MVeiculo.getIdModelo();
-							break;
+							anos_de.add(MVeiculo.getNomeModelo());
 						}
-					}
 
-					setsIdModelo(sTipoVeiculo);
-					setsId(sId);
-					  aModelo = Arquivo.getModeloAnoCaminhao(sId, sTipoVeiculo);
-
-					anos_de.clear();
-					anos_de = new ArrayList<String>();
-					modelo_ano.put(modelo, aModelo);
-					for (ModeloAnoVeiculo MVeiculo :   aModelo)
-					{
-						anos_de.add(MVeiculo.getNomeModelo());
 					}
 
 				}
-
 			}
-		} else
-		{
-			anos_de = new ArrayList<String>();
+			else
+			{
+				anos_de = new ArrayList<String>();
+			}
 		}
+		catch (Exception e)
+		{
+			 
+		}
+		
 	}
 
 	public void displayLocation()
 	{
-		ArrayList<ModeloAnoVeiculo> aVeiculoModelo = (ArrayList) modelo_ano.get(modelo);
-
-		String sAnoCode = null;
-
-		for (ModeloAnoVeiculo MVeiculo : aVeiculoModelo)
-		{
-			if (MVeiculo.getNomeModelo().equalsIgnoreCase(ano_de))
-			{
-				sAnoCode = MVeiculo.getIdModelo();
-				break;
-			}
-		}
-
-		String sPreco = null;
 
 		if (tipo.equalsIgnoreCase("Carro"))
 		{
-			sPreco = Arquivo.getDetalheCarro(getsId(), getsIdModelo(), sAnoCode);
+			try
+			{
+				CotacaoVeiculoDao.getDetalhes( cotacao, 1, marca, modelo, ano_de, ano_ate, String.valueOf(valor_de), String.valueOf(valor_ate));
+			} catch (Exception e)
+			{
+
+			}
 		}
 		if (tipo.equalsIgnoreCase("Moto"))
 		{
-			sPreco = Arquivo.getDetalheMoto(getsId(), getsIdModelo(), sAnoCode);
+			try
+			{
+				CotacaoVeiculoDao.getDetalhes(
+				        cotacao, 2, marca, modelo, ano_de, ano_ate, String.valueOf(valor_de), String.valueOf(valor_ate)
+				);
+			} catch (Exception e)
+			{
+
+			}
 		}
 		if (tipo.equalsIgnoreCase("Caminhao"))
 		{
-			sPreco = Arquivo.getDetalheCaminhao(getsId(), getsIdModelo(), sAnoCode);
+			try
+			{
+				CotacaoVeiculoDao.getDetalhes(
+				        cotacao, 3, marca, modelo, ano_de, ano_ate, String.valueOf(valor_de), String.valueOf(valor_ate)
+				);
+			} catch (Exception e)
+			{
+
+			}
 		}
 
-		setVizivel(true);
-		setLabelAno(ano_de.substring(0, 4));
-		setLabelCombustivel(ano_de.substring(4, ano_de.length()));
-		setLabelModelo(modelo);
-		setLabelMarca(marca);
-		setLabelPreco(sPreco);
+		/*
+		 * setVizivel(true); setLabelAno(ano_de.substring(0, 4));
+		 * setLabelCombustivel(ano_de.substring(4, ano_de.length()));
+		 * setLabelModelo(modelo); setLabelMarca(marca); setLabelPreco(sPreco);
+		 */
 	}
 
 	public String getsId()
@@ -606,5 +643,25 @@ public class DropdownView implements Serializable
 	public void setsIdModelo(String sIdModelo)
 	{
 		this.sIdModelo = sIdModelo;
+	}
+
+	public String getAno_ate()
+	{
+		return ano_ate;
+	}
+
+	public void setAno_ate(String ano_ate)
+	{
+		this.ano_ate = ano_ate;
+	}
+
+	public Cotacao getCotacao()
+	{
+		return cotacao;
+	}
+
+	public void setCotacao(Cotacao cotacao)
+	{
+		this.cotacao = cotacao;
 	}
 }

@@ -139,7 +139,7 @@ public class Arquivo
       {
         JSONObject objMarca = jsonMarcas.getJSONObject(idxMarca);
         
-        listaModelos.add(new ModeloVeiculo(objMarca.get("id").toString(), objMarca.get("fipe_name").toString()));
+        listaModelos.add(new ModeloVeiculo(objMarca.get("id").toString(), objMarca.get("fipe_name").toString(),""));
       }
       
     }
@@ -190,7 +190,7 @@ public class Arquivo
 
   private static ArrayList<ModeloAnoVeiculo> getDetalheModelo(String sTipoVeiculo, String sId, String sIdModelo)
   {
-    ArrayList<ModeloAnoVeiculo> listaMarcas = new ArrayList<ModeloAnoVeiculo>();
+	  ArrayList<ModeloAnoVeiculo> listaMarcas = new ArrayList<ModeloAnoVeiculo>();
     
 
 

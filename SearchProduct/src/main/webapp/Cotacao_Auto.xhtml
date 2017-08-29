@@ -4,7 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	
+	 >
 <h:head>
   
  <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
@@ -40,6 +43,7 @@ body, html {
 }
   
 </style>
+ 
 </h:head>
 
 
@@ -82,7 +86,7 @@ body, html {
 			<p:outputLabel id="tipo_label" value="Tipo: "   />
 				 
 				<h:selectOneMenu id="tipo" value="#{dropdownView.tipo}"  style="height:35px; width:180px; background-color: transparent !important;"   styleClass="form-control"   >
-					<p:ajax listener="#{dropdownView.onTipoChange}" 		update="marca, modelo,ano_de_ ,painelResultado"   />
+					<p:ajax listener="#{dropdownView.onTipoChange}" 		update="marca, modelo,ano_de_"   />
 					<f:selectItem itemLabel="Selecione" itemValue="" 		noSelectionOption="true" />
 					<f:selectItems value="#{dropdownView.tipos}" />
 				</h:selectOneMenu>
@@ -90,15 +94,14 @@ body, html {
 			
 				<p:outputLabel id="marca_label" value="Marca: "  />
 				<h:selectOneMenu id="marca" value="#{dropdownView.marca}"   effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;" styleClass="form-control"   >
-					<p:ajax listener="#{dropdownView.onMarcaChange}" 		update="modelo,ano_de_ ,painelResultado" />
+					<p:ajax listener="#{dropdownView.onMarcaChange}" 		update="modelo,ano_de_ " />
 					<f:selectItem itemLabel="Selecione" itemValue="" 		noSelectionOption="true" />
 					<f:selectItems value="#{dropdownView.marcas}" />
-				</h:selectOneMenu>
+				</h:selectOneMenu> 
 				
-
 				<p:outputLabel id="modelo_label" value="Modelo: "   />
 				<h:selectOneMenu id="modelo" value="#{dropdownView.modelo}" effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;" styleClass="form-control"  >
-					<p:ajax listener="#{dropdownView.onModeloChange}" 		update="ano_de_,painelResultado" />
+					<p:ajax listener="#{dropdownView.onModeloChange}" 		update="ano_de_,ano_ate_"  />
 					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{dropdownView.modelos}" />
 				</h:selectOneMenu>
@@ -110,16 +113,32 @@ body, html {
 					<f:selectItem itemLabel="Selecione" itemValue=""  />
 					<f:selectItems value="#{dropdownView.anos_de}" noSelectionOption="true" />
 				</h:selectOneMenu> 
+				
+				<p:outputLabel id="ano_ate_label" value="Ano Ate: " />
+				<h:selectOneMenu id="ano_ate_" value="#{dropdownView.ano_ate}"  effect="fade" var="q" style="height:35px; width:180px; background-color: transparent !important;"  styleClass="form-control" >
+				<f:selectItem itemLabel="Selecione" itemValue=""  />
+					<f:selectItems value="#{dropdownView.anos_de}" noSelectionOption="true" />
+				</h:selectOneMenu> 
+			<!-- 	
+				<p:outputLabel id="valor_de_label" value="Valor De: "   />
+				<pe:inputNumber   id="input0" value="#{dropdownView.valorDe}"     style="height:35px; width:180px; background-color: transparent !important;"   >
+				</pe:inputNumber>
 
-			</h:panelGrid>
+				<p:outputLabel id="valor_ate_label" value="Valor Até: " />
+				<pe:inputNumber   id="input1" value="#{dropdownView.valorAte}"  effect="fade"   style="height:35px; width:180px; background-color: transparent !important;"   >
+				</pe:inputNumber>
+					
+					 -->
+ 							 
+						</h:panelGrid>
 
 			<p:separator />
 
-			<p:commandButton value="Consultar" update="ano_modelo_label_, marca_modelo_label_ , painelResultado" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" styleClass="button" />
+			<p:commandButton value="Consultar" update=":tabela_resultado" actionListener="#{dropdownView.displayLocation}" icon="ui-icon-check" styleClass="button" />
 			
 		</p:panel>
 		 
-		<p:panel id="painelResultado" visible="#{dropdownView.vizivel}"  style="width:450px; margin-bottom:2cm; background-color: transparent !important; " align="Right">
+	<!-- 	<p:panel id="painelResultado" visible="#{dropdownView.vizivel}"  style="width:450px; margin-bottom:2cm; background-color: transparent !important; " align="Right">
 			
 			<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
 					
@@ -141,7 +160,7 @@ body, html {
 
 			</h:panelGrid> 
 			 
-		</p:panel>
+		</p:panel> -->
 			 
  </h:form> 
 		</div>
@@ -171,7 +190,44 @@ body, html {
 	<div class="table-responsive col-md-12">
 	
 	
-		<table  class="table table-striped" cellspacing="0" cellpadding="0">
+	
+	
+	<h:dataTable id="tabela_resultado"   value="#{dropdownView.cotacao.orderList}" var="o" styleClass="table table-striped"   border="2" cellspacing="1" cellpadding="1">>
+	
+    			<h:column>
+    				 
+    			<f:facet name="header">Tipo Veiculo</f:facet> 
+    				#{o.tipo_veiculo}
+    			</h:column>
+    			
+    			<h:column>
+    				<f:facet name="header">Marca</f:facet>
+    				#{o.marca}
+    			</h:column>
+    			
+    			<h:column>
+    				<f:facet name="header">Modelo</f:facet>
+    				#{o.modelo}
+    			</h:column>
+    			
+    			<h:column>
+    				<f:facet name="header">Combustivel</f:facet>
+    				#{o.combustivel}
+    			</h:column>
+    			
+    			<h:column>
+    				<f:facet name="header">Preco</f:facet>
+    				#{o.preco}
+    			</h:column>
+    			
+    			<h:column>
+    				<f:facet name="header">Ano Modelo</f:facet>
+    				#{o.ano_modelo}
+    			</h:column>
+    		
+    		</h:dataTable>
+	 
+		<!-- <table  class="table table-striped" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -293,38 +349,9 @@ body, html {
 					</td>
 				</tr>
 			</tbody>
-		</table>
+		</table>  -->
 	
-	
-	<h:dataTable value="#{order.orderList}" var="o"
-    			styleClass="order-table"
-    			headerClass="order-table-header"
-    			rowClasses="order-table-odd-row,order-table-even-row"
-    		>
-
-    			<h:column>
-    				<!-- column header -->
-    				<f:facet name="header">Order No</f:facet>
-    				<!-- row record -->
-    				#{o.orderNo}
-    			</h:column>
-    			
-    			<h:column>
-    				<f:facet name="header">Product Name</f:facet>
-    				#{o.productName}
-    			</h:column>
-    			
-    			<h:column>
-    				<f:facet name="header">Price</f:facet>
-    				#{o.price}
-    			</h:column>
-    			
-    			<h:column>
-    				<f:facet name="header">Quantity</f:facet>
-    				#{o.qty}
-    			</h:column>
-    		
-    		</h:dataTable>
+	 
 	
 	
 	</div>
