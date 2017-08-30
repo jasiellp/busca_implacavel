@@ -25,21 +25,34 @@ body, html {
 	height: 100%
 }
 .bgimg {
-   		background-color: #183026;
-		background-image: url('img/img.jpg'), url('img/img.jpg');
-		background-repeat: repeat, no-repeat;
-		background-size: auto, cover;
-		background-position: top left, center 0;
-		background-attachment: fixed, fixed;
-		 
-		color: #3a3939;
-		 
+   	 
+		background-image: url('img/slide01.jpg'), url('img/slide01.jpg');
+		overflow: hidden; /* para que não tenha rolagem se a imagem de fundo for maior que a tela */
+    	width:100%;
+   	 	height:560px;
+    	
 }  
 .menu .ui-selectonemenu-label { 
-    background: #FFFFF0;
+    background: #1C1C1C;
 }
 .panel .ui-selectonemenu-list { 
-    background: #FFFFF0;
+    background: #00008B;
+}
+.p {
+   		font-size:14px; 
+        color: #FFFFF0;
+        font-weight:bold; 
+        font-style:normal;
+    
+}
+.pc {
+
+ font-family: "DIN Neuzeit Grotesk", Georgia, Serif;
+   		font-size:16px; 
+        color: black;
+        font-weight:bold; 
+        font-style:normal;
+    
 }
   
 </style>
@@ -79,43 +92,43 @@ body, html {
 			 <h:form> 
 		
  
-		<p:panel visible="true" style="width:350px; margin-bottom:2cm; background-color: transparent !important; "  >
+		<p:panel visible="true" style="  width:350px; margin-bottom:2cm; background-color: transparent !important; "   >
 			
 			<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
 			
-			<p:outputLabel id="tipo_label" value="Tipo: "   />
+			<p:outputLabel id="tipo_label" value="Tipo: " styleClass="p"  />
 				 
-				<h:selectOneMenu id="tipo" value="#{dropdownView.tipo}"  style="height:35px; width:180px; background-color: transparent !important;"   styleClass="form-control"   >
+				<h:selectOneMenu id="tipo" value="#{dropdownView.tipo}"  style="height:35px; width:180px; background-color: transparent !important;"   styleClass="form-control; pc"   >
 					<p:ajax listener="#{dropdownView.onTipoChange}" 		update="marca, modelo,ano_de_"   />
 					<f:selectItem itemLabel="Selecione" itemValue="" 		noSelectionOption="true" />
 					<f:selectItems value="#{dropdownView.tipos}" />
 				</h:selectOneMenu>
 			     
 			
-				<p:outputLabel id="marca_label" value="Marca: "  />
-				<h:selectOneMenu id="marca" value="#{dropdownView.marca}"   effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;" styleClass="form-control"   >
+				<p:outputLabel id="marca_label" value="Marca: " styleClass="p" />
+				<h:selectOneMenu id="marca" value="#{dropdownView.marca}"   effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;"  styleClass="form-control; pc"    >
 					<p:ajax listener="#{dropdownView.onMarcaChange}" 		update="modelo,ano_de_ " />
 					<f:selectItem itemLabel="Selecione" itemValue="" 		noSelectionOption="true" />
 					<f:selectItems value="#{dropdownView.marcas}" />
 				</h:selectOneMenu> 
 				
-				<p:outputLabel id="modelo_label" value="Modelo: "   />
-				<h:selectOneMenu id="modelo" value="#{dropdownView.modelo}" effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;" styleClass="form-control"  >
+				<p:outputLabel id="modelo_label" value="Modelo: "  styleClass="p" />
+				<h:selectOneMenu id="modelo" value="#{dropdownView.modelo}" effect="fade" var="p" style="height:35px; width:180px; background-color: transparent !important;"  styleClass="form-control; pc"   >
 					<p:ajax listener="#{dropdownView.onModeloChange}" 		update="ano_de_,ano_ate_"  />
 					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
 					<f:selectItems value="#{dropdownView.modelos}" />
 				</h:selectOneMenu>
 				
 				
-				<p:outputLabel id="ano_de_label" value="Ano De: " />
-				<h:selectOneMenu id="ano_de_" value="#{dropdownView.ano_de}"  effect="fade" var="q" style="height:35px; width:180px; background-color: transparent !important;"  styleClass="form-control" >
+				<p:outputLabel id="ano_de_label" value="Ano De: " styleClass="p" />
+				<h:selectOneMenu id="ano_de_" value="#{dropdownView.ano_de}"  effect="fade" var="q" style="height:35px; width:180px; background-color: transparent !important;"   styleClass="form-control; pc"  >
 					
 					<f:selectItem itemLabel="Selecione" itemValue=""  />
 					<f:selectItems value="#{dropdownView.anos_de}" noSelectionOption="true" />
 				</h:selectOneMenu> 
 				
-				<p:outputLabel id="ano_ate_label" value="Ano Ate: " />
-				<h:selectOneMenu id="ano_ate_" value="#{dropdownView.ano_ate}"  effect="fade" var="q" style="height:35px; width:180px; background-color: transparent !important;"  styleClass="form-control" >
+				<p:outputLabel id="ano_ate_label" value="Ano Ate: " styleClass="p"  />
+				<h:selectOneMenu id="ano_ate_" value="#{dropdownView.ano_ate}"  effect="fade" var="q" style="height:35px; width:180px; background-color: transparent !important;"   styleClass="form-control; pc"   >
 				<f:selectItem itemLabel="Selecione" itemValue=""  />
 					<f:selectItems value="#{dropdownView.anos_de}" noSelectionOption="true" />
 				</h:selectOneMenu> 
@@ -138,29 +151,7 @@ body, html {
 			
 		</p:panel>
 		 
-	<!-- 	<p:panel id="painelResultado" visible="#{dropdownView.vizivel}"  style="width:450px; margin-bottom:2cm; background-color: transparent !important; " align="Right">
-			
-			<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
-					
-					<p:outputLabel id="ano_modelo_label" value="Ano Modelo: "   />
-			 		<p:outputLabel id="ano_modelo_label_" value="#{dropdownView.labelAno}"  />
-			 		
-			 		<p:outputLabel id="marca_modelo_label" value="Marca: "   />
-			 		<p:outputLabel id="marca_modelo_label_" value="#{dropdownView.labelMarca}"   />
-			 		
-			 		<p:outputLabel id="nome_modelo_label" value="Nome Modelo: "   />
-			 		<p:outputLabel id="nome_modelo_label_" value="#{dropdownView.labelModelo}"   />
-			 		
-			 		<p:outputLabel id="preco_modelo_label" value="Preço Modelo: "   />
-			 		<p:outputLabel id="preco_modelo_label_" value="#{dropdownView.labelPreco}"   />
-			 		
-			 		<p:outputLabel id="combustivel_modelo_label" value="Combustivel : "   />
-			 		<p:outputLabel id="combustivel_modelo_label_" value="#{dropdownView.labelCombustivel}"   />
-			 		 
-
-			</h:panelGrid> 
-			 
-		</p:panel> -->
+	 
 			 
  </h:form> 
 		</div>
@@ -192,11 +183,11 @@ body, html {
 	
 	
 	
-	<h:dataTable id="tabela_resultado"   value="#{dropdownView.cotacao.orderList}" var="o" styleClass="table table-striped"   border="2" cellspacing="1" cellpadding="1">>
+	<h:dataTable id="tabela_resultado"   value="#{dropdownView.cotacao.orderList}" var="o" styleClass="table table-striped; pc"   border="3" cellspacing="1" cellpadding="1">>
 	
-    			<h:column>
+    			<h:column styleClass="pc">
     				 
-    			<f:facet name="header">Tipo Veiculo</f:facet> 
+    			<f:facet name="header" styleClass="pc">Tipo Veiculo</f:facet> 
     				#{o.tipo_veiculo}
     			</h:column>
     			

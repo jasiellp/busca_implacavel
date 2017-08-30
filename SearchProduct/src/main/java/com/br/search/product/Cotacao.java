@@ -1,7 +1,6 @@
 package com.br.search.product;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -35,13 +34,13 @@ public class Cotacao implements Serializable
 		private String marca;
 		private String modelo;
 		private String combustivel;
-		private BigDecimal preco;
+		private String preco;
 		private String ano_modelo;
 		 
 		
 		 
 
-		public CotacaoVeiculo(String tipo_veiculo, String marca, String modelo, String combustivel, BigDecimal preco, String ano_modelo)
+		public CotacaoVeiculo(String tipo_veiculo, String marca, String modelo, String combustivel, String preco, String ano_modelo)
 		{
 			 
 			this.tipo_veiculo = tipo_veiculo;
@@ -116,7 +115,7 @@ public class Cotacao implements Serializable
 
 
 
-		public BigDecimal getPreco()
+		public String getPreco()
 		{
 			return preco;
 		}
@@ -124,7 +123,7 @@ public class Cotacao implements Serializable
 
 
 
-		public void setPreco(BigDecimal preco)
+		public void setPreco(String preco)
 		{
 			this.preco = preco;
 		}

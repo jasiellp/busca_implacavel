@@ -1,7 +1,9 @@
 package com.br.search.product.dao;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.br.search.product.Cotacao;
 import com.br.search.product.Cotacao.CotacaoVeiculo;
@@ -208,9 +210,13 @@ public class CotacaoVeiculoDao
 		
 		CotacaoVeiculo[] m_cotacao = new CotacaoVeiculo[iNumLinhas];
 		
+		
+		DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols (new Locale ("pt", "BR")));
+		formatoDois.setMinimumFractionDigits(2); 
+		formatoDois.setParseBigDecimal (true);
 		for(int i = 0; i < iNumLinhas; i++)
 		{
-			m_cotacao[i]= new CotacaoVeiculo(tabela.getString("tipo_veiculo", i),tabela.getString("marca", i),tabela.getString("modelo", i),tabela.getString("combustivel", i), new BigDecimal(tabela.getDouble("preco", i)),tabela.getString("ano_modelo", i));
+			m_cotacao[i]= new CotacaoVeiculo(tabela.getString("tipo_veiculo", i),tabela.getString("marca", i),tabela.getString("modelo", i),tabela.getString("combustivel", i), formatoDois.format(tabela.getDouble("preco", i))  ,tabela.getString("ano_modelo", i));
 		}
 		
 		cotacao.setOrderList(m_cotacao);
