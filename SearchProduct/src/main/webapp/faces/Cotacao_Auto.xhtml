@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<title>Caveira Bussines</title>
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet"></link> 
+	<style>
+body, h1 {
+	font-family: "Raleway", sans-serif
+}
+
+body, html {
+	height: 100%
+}
+.component {
+	line-height: 1.5em;
+	
+	width: 90%;
+	 
+	overflow: hidden;
+}
+.component .filler {
+	font-family: "Blokk", Arial, sans-serif;
+	color: #d3d3d3;
+}
+.bgimg {
+	display: table;
+	width: 100%;
+	height: 100vh;
+	padding: 100px 0;
+	color: white;
+	background: url('img/slide_2.jpg'), url('img/slide_2.jpg')  ;
+	background-position: 30% 45%;
+	overflow: hidden; 
+	background-size: cover;
+}
+
+.menu .ui-selectonemenu-label {
+	background: #1C1C1C;
+}
+
+.panel .ui-selectonemenu-list {
+	background: #00008B;
+}
+
+.p {
+	font-size: 14px;
+	color: #FFFFF0;
+	font-weight: bold;
+	font-style: normal;
+}
+
+.pc {
+	font-family: "DIN Neuzeit Grotesk", Georgia, Serif;
+	font-size: 16px;
+	color: #29D832;
+	font-weight: bold;
+	font-style: normal;
+}
+
+.cor_tabela {
+	font-family: "DIN Neuzeit Grotesk", Georgia, Serif;
+	font-size: 22px;
+	color: #2B4261;
+	font-weight: bold;
+	font-style: normal;
+	
+}
+.tablej {
+    border-collapse: collapse;
+    margin-bottom: 3em;
+    width: 86%;
+    background: #fff;
+    background-color: transparent !important; 
+    color: #83041E;
+    font-family: "DIN Neuzeit Grotesk", Georgia, Serif ;
+	font-size: 16px;
+	 
+} 
+.cabecalho {
+
+   text-align: center;
+   font-size: 25px;
+   font: 11px Arial, sans-serif;
+   font-weight: bold;
+   color: Snow;
+   background:  #008B45;
+
+}
+</style>
+
+</h:head>
+
+
+<h:body class="bgimg">
+ 
+	<div id="main" class="container-fluid" style="margin-top: 50px">
+
+		<div id="top" class="row">
+		
+			<div class="col-sm-3">
+				 
+				<h:form>
+
+
+					<p:panel visible="true"
+						style="  width:350px; margin-bottom:2cm; background-color: transparent !important; ">
+
+						<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
+
+							<p:outputLabel id="tipo_label" value="Tipo: " styleClass="p" />
+
+							<h:selectOneMenu id="tipo" value="#{dropdownView.tipo}"
+								style="height:35px; width:180px; background-color: transparent !important;"
+								styleClass="form-control; pc">
+								<p:ajax listener="#{dropdownView.onTipoChange}"
+									update="marca, modelo, ano_de_" />
+								<f:selectItem itemLabel="Selecione" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems value="#{dropdownView.tipos}" />
+							</h:selectOneMenu>
+
+
+							<p:outputLabel id="marca_label" value="Marca: " styleClass="p" />
+							<h:selectOneMenu id="marca" value="#{dropdownView.marca}"
+								effect="fade" var="p"
+								style="height:35px; width:180px; background-color: transparent !important;"
+								styleClass="form-control; pc">
+								<p:ajax listener="#{dropdownView.onMarcaChange}"
+									update="modelo, ano_de_" />
+								<f:selectItem itemLabel="Selecione" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems value="#{dropdownView.marcas}" />
+							</h:selectOneMenu>
+
+							<p:outputLabel id="modelo_label" value="Modelo: " styleClass="p" />
+							<h:selectOneMenu id="modelo" value="#{dropdownView.modelo}"
+								effect="fade" var="p"
+								style="height:35px; width:180px; background-color: transparent !important;"
+								styleClass="form-control; pc">
+								<p:ajax listener="#{dropdownView.onModeloChange}"
+									update="ano_de_, ano_ate_" />
+								<f:selectItem itemLabel="Selecione" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems value="#{dropdownView.modelos}" />
+							</h:selectOneMenu>
+
+
+							<p:outputLabel id="ano_de_label" value="Ano De: " styleClass="p" />
+							<h:selectOneMenu id="ano_de_" value="#{dropdownView.ano_de}"
+								effect="fade" var="q"
+								style="height:35px; width:180px; background-color: transparent !important;"
+								styleClass="form-control; pc">
+
+								<f:selectItem itemLabel="Selecione" itemValue="" />
+								<f:selectItems value="#{dropdownView.anos_de}"
+									noSelectionOption="true" />
+							</h:selectOneMenu>
+
+							<p:outputLabel id="ano_ate_label" value="Ano Ate: "
+								styleClass="p" />
+							<h:selectOneMenu id="ano_ate_" value="#{dropdownView.ano_ate}"
+								effect="fade" var="q"
+								style="height:35px; width:180px; background-color: transparent !important;"
+								styleClass="form-control; pc">
+								<f:selectItem itemLabel="Selecione" itemValue="" />
+								<f:selectItems value="#{dropdownView.anos_de}"
+									noSelectionOption="true" />
+							</h:selectOneMenu>
+							 
+						</h:panelGrid>
+
+						<p:separator />
+
+						<p:commandButton value="Consultar" update=":tabela_resultado"
+							actionListener="#{dropdownView.displayLocation}"
+							icon="ui-icon-check" styleClass="button" />
+
+					</p:panel>
+
+
+
+				</h:form>
+			</div>
+			<div class="col-sm-6">
+
+				 
+
+			</div>
+			 
+		</div>
+		<!-- /#top -->
+ 
+		<hr />
+			<div  style="height: 400px; overflow: auto;"  >
+		<div id="list" class="component"  style="height: 400px; width:90%; overflow: auto;"> 
+ 
+				<h:dataTable id="tabela_resultado"
+					value="#{dropdownView.cotacao.orderList}" 
+					var="o"
+					styleClass="tablej"  
+					style="width:90%"
+					headerClass="cabecalho"   
+					border="2" 
+					cellspacing="1"
+					cellpadding="1"  > 
+	
+    			<h:column > 
+						<f:facet name="header">Tipo Veiculo</f:facet> 
+						<h:outputText value="#{o.tipo_veiculo}" style="font-weight: bold; color: black ; background-color: #FFFFFF; "/>
+    				
+    			</h:column>
+
+				<h:column>
+						<f:facet name="header">Marca</f:facet>
+						<h:outputText value="#{o.marca}" style="background:Snow; color: black ; background-color: #FFFFFF;  "/>
+    				
+    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Modelo</f:facet>
+						<h:outputText value="#{o.modelo}" style="color: black ; background-color: #FFFFFF; "/>
+    				
+    			</h:column>
+
+					<h:column >
+						<f:facet name="header">Combustivel</f:facet>
+						<h:outputText value="#{o.combustivel}" style="background:pink ; background-color: transparent !important; "/>
+    				
+    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Preco</f:facet>
+						<h:outputText value="#{o.preco}" style="color: black ; width:125px;  background-color: transparent !important; "/>
+    				
+    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Ano Modelo</f:facet>
+						<h:outputText value="#{o.ano_modelo}" style="color: black ; background-color: #FFFFFF; "/>
+    				
+    			</h:column>
+
+				</h:dataTable> 
+			 
+</div>
+		</div>
+		 
+	</div>
+	 
+	 
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+
+</h:body>
+</html>

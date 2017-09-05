@@ -1,0 +1,21 @@
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+
+	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
+
+	 
+
+	<url-mapping id="Cotacao_Auto">
+		<pattern value="/Cotacao_Auto" />
+		<view-id value="/Cotacao_Auto.jsf" />
+	</url-mapping>
+
+
+<url-mapping id="index">
+		<pattern value="/index" />
+		<view-id value="/index.jsf" />
+	</url-mapping>
+
+	 
+</pretty-config>

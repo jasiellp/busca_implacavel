@@ -31,7 +31,7 @@
 			<name>project</name>
 			<url>file:${project.basedir}/repo</url>
 		</repository>
-		<!-- PRIMEFACES REPOSITORY -->
+
 		<repository>
 			<id>prime-repo</id>
 			<name>PrimeFaces Maven Repository</name>
@@ -39,7 +39,7 @@
 			<layout>default</layout>
 		</repository>
 
-		<!-- REPOSITÓRIO DO JASPER REPORTS -->
+
 		<repository>
 			<id>jasperreports</id>
 			<url>http://repo1.maven.org/maven2/</url>
@@ -48,6 +48,11 @@
 	</repositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.ocpsoft</groupId>
+			<artifactId>prettyfaces-jsf2</artifactId>
+			<version>3.3.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>postgresql</groupId>
