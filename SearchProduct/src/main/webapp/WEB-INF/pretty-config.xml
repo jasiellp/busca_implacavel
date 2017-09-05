@@ -4,18 +4,19 @@
 
 	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
 
+
+ 	<url-mapping id="index">
+        <pattern value="/" />
+        <view-id value="/index.jsf" />
+    </url-mapping>
 	 
 
 	<url-mapping id="Cotacao_Auto">
-		<pattern value="/Cotacao_Auto" />
+		<pattern value="/cotacao" />
 		<view-id value="/Cotacao_Auto.jsf" />
 	</url-mapping>
 
-
-<url-mapping id="index">
-		<pattern value="/index" />
-		<view-id value="/index.jsf" />
-	</url-mapping>
+ 
 
 	 
 </pretty-config>
