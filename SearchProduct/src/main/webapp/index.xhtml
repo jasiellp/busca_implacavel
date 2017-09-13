@@ -5,25 +5,59 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+	xmlns:pe="http://primefaces.org/ui/extensions"  >
 
 <h:head>
 	<title>Caveira business</title>
 	<meta charset="utf-8"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<link rel="stylesheet" href="assets/css/main.css" />
-
+	<script name="jquery/jquery.js" library="primefaces"></script>
+	<h:outputScript library="js" name="assets/js/locale-primefaces.js"/>
+	
+<script>
+	jQuery(function(){
+	jQuery.noConflict();
+	});
+</script>
+ <script>
+ function trimDecimalPlace(){                
+     var curVal = $(".ui-inputNum > input:first-child").val();
+     var parseVal = '';
+     if(curVal.indexOf(".") > curVal.indexOf(",")){
+         var tokens = curVal.split(".");
+         var decimalVal = parseFloat("0."+tokens[1])+"";                 
+         if(decimalVal != "0"){
+            parseVal = tokens[0]+"."+decimalVal.substring(2);
+         }else{
+            parseVal = tokens[0];
+         }   
+     }else{
+         var tokens = curVal.split(",");
+         var decimalVal = parseFloat("0."+tokens[1])+"";                 
+         if(decimalVal != "0"){
+            parseVal = tokens[0]+","+decimalVal.substring(2);
+         }else{
+            parseVal = tokens[0];
+         }
+     }
+     $(".ui-inputNum > input:first-child").val(parseVal);
+ }
+</script>
 </h:head>
 <h:body>
 
-	<!-- Header -->
+	
 	<section id="header"> <header>
 	<h1>Caveira BUSINESS</h1>
 	<p>Soluções Investimentos</p>
-	</header> <footer> <a href="#banner"
-		class="button style2 scrolly-middle">Um Passo Para seus Sonhos</a> </footer> </section>
+	</header> 
+	    <footer> 
+	         <a href="#banner" class="button style2 scrolly-middle">Um Passo Para seus Sonhos</a> 
+	    </footer> 
+	</section>
 
-	<!-- Banner -->
+	
 	<section id="banner"> <header>
 	<h2>Qual é o Seu Sonho?</h2>
 	</header>
@@ -31,8 +65,8 @@
 		Sua meta é o <a href="http://twitter.com/ajlkn">CARRO</a> novo, uma <a
 			href="http://html5up.net">VIAGEM</a> com a familia? <br /> conte com
 		nossa <strong>solução</strong>, para poupar de forma estratégica <br />
-		e obter os melhores investimentos com as melhores taxas. <br /> <a
-			href="http://html5up.net/license">Crie sua conta Gratis</a>.
+		e obter os melhores investimentos com as melhores taxas. <br /> 
+		<a href="http://html5up.net/license">Crie sua conta Gratis</a>.
 	</p>
 	<footer> <a href="#first" class="button style2 scrolly">Faça
 		uma Simulação</a> </footer> </section>
@@ -46,26 +80,63 @@
 
 
 	<div class="inner">
+		        
+                        
 		<header>
-		<h2>estabeleça sua meta<br />
+		<h1>estabeleça sua meta<br/> <br/>
+			
+		</h1>
+  <h:form id="myForm"> 
+  
+   <p:growl id="growl" showDetail="true" />
+	<p:panel visible="true" 
+			 style="width:350px;
+ 			 margin-bottom:2cm; 
+ 			 background-color: transparent !important; ">
+
+		<h:panelGrid columns="1" cellpadding="4" cellspacing="1">
+
+                <h:outputText value="Prazo" for="calenda" style="text-align: left" />
+			       
+			       <p:calendar id ="calenda" 
+			            value="#{home.selectedDate}"
+                        locale="pt_BR"
+                        popup="#{home.popup}"
+                        datePattern="#{home.pattern}"                      
+                        cellWidth="14px" cellHeight="12px" 
+                        style="width:186px; height:20px; line-height: 15px; background-color: transparent !important;"  
+                        timeZone="GMT-3" />
+                         
+                <h:outputText for="txt3" style="text-align: left"  value="Valor" />
+			    
+			    <p:inputText      id="txt3"    
+			    			   value="#{home.number3}"  
+			         		   style="height:35px; width:300px; background-color: transparent !important;"     >
+ 
+ 						<f:ajax event="blur" render="@this" />
+					</p:inputText>
+ 			   
+ 			    
+ 			    
+ 			    <p:slider for="txt3" step="100" minValue="10000"  maxValue="1000000" style="width:300px; height:8px;  " range="true" displayTemplate="Between {min} and {max}" />
+
+			
 			 
-				<p:outputLabel id="prazo_label" value="Prazo: " />
-				<p:inputText id="input1" value="">
-				 
-				</p:inputText>
 
-				<p:outputLabel id="valor_label" value="Valor: " />
-				<p:inputText id="input2" value="">
-				 
-				</p:inputText>
-	 
-
-
-</h2>
+				</h:panelGrid>
+ 	</p:panel>
+ 	
+ 	 
+			<h:commandLink value="Simular" action="#{home.redirect()}"   />
+  </h:form> 	 
+			  
 		
 		</header>
-		<p>
-			 <a href="/cotacao">Simular</a>
+		<p> 
+		 
+			  
+			 
+
 		</p>
 	</div>
 	</article>
@@ -116,7 +187,7 @@
 		</ul>
 	</div>
 	</section>
-
+ 
 
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -125,6 +196,7 @@
 	<script src="assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
-
+	<script src="assets/js/ie/respond.min.js"></script>
+	
 </h:body>
 </html>

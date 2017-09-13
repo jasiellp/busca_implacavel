@@ -2,14 +2,17 @@ package com.br.search.product;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import com.br.search.product.dao.CotacaoVeiculoDao;
+import com.br.search.product.tabela.SelectionView;
 import com.br.search.product.util.Arquivo;
 import com.br.search.product.util.MarcaVeiculo;
 import com.br.search.product.util.ModeloAnoVeiculo;
@@ -18,7 +21,7 @@ import com.br.search.product.util.Sessao;
 import com.br.search.product.util.WebLog;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DropdownView implements Serializable
 {
 	private static final long serialVersionUID = -5217446585419927326L;
@@ -29,7 +32,7 @@ public class DropdownView implements Serializable
 
 	private Double valor_de  = new Double(0);
 	private Double valor_ate = new Double(0);
-
+	private double number3 = 10000.0d;
 	private String tipo;
 	private String marca;
 	private String modelo;
@@ -51,8 +54,15 @@ public class DropdownView implements Serializable
 	private String sId;
 	private String sIdModelo;
 
-	private Cotacao cotacao = new Cotacao();
-
+	
+	private String pattern;
+	private Date selectedDate = new Date();
+	private boolean popup;
+	
+ 	private SelectionView cotacao = new SelectionView();
+ 			
+ 	 
+	
 	@PostConstruct
 	public void init()
 	{
@@ -84,6 +94,14 @@ public class DropdownView implements Serializable
 			{
 				data.put("Caminhao", CotacaoVeiculoDao.getMarcaCaminhoes());
 			}
+		 	 
+		     this.popup = true;
+		     this.pattern = "MMM d, yyyy";
+		     
+		     number3 =  (double) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("number3");
+		     selectedDate =(Date) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDate");
+		     System.out.println("JASIEL LINDO "+number3);
+		     
 		}
 		catch (Exception e)
 		{
@@ -426,7 +444,22 @@ public class DropdownView implements Serializable
 			anos_de = new ArrayList<String>();
 		}
 	}
+	
+	public String jasiel()
+	{
+		
+		System.out.println("----------------------Carga------------------------------");
+		 
+		
+		 
+	 
+		System.out.println("------------------Fim----Carga------------------------------");
+		
+		
+		
+		return "/SearchProduct/cotacao";
 
+	}
 	public void onModeloChange()
 	{
 		
@@ -655,13 +688,54 @@ public class DropdownView implements Serializable
 		this.ano_ate = ano_ate;
 	}
 
-	public Cotacao getCotacao()
+	public SelectionView getCotacao()
 	{
 		return cotacao;
 	}
 
-	public void setCotacao(Cotacao cotacao)
+	public void setCotacao(SelectionView cotacao)
 	{
 		this.cotacao = cotacao;
 	}
+	
+	public boolean isPopup()
+	{
+		return popup;
+	}
+
+	public void setPopup(boolean popup)
+	{
+		this.popup = popup;
+	}
+
+	public String getPattern()
+	{
+		return pattern;
+	}
+
+	public void setPattern(String pattern)
+	{
+		this.pattern = pattern;
+	}
+	public Date getSelectedDate()
+	{
+		return selectedDate;
+	}
+
+	public void setSelectedDate(Date selectedDate)
+	{
+		
+		
+		this.selectedDate = selectedDate;
+	}
+	public double getNumber3()
+	{
+		return number3;
+	}
+
+	public void setNumber3(double number3)
+	{
+		this.number3 = number3;
+	}
+
 }

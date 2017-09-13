@@ -51,7 +51,7 @@ public class WebConexao
 	public  WebTable  executeSQL(Object query) throws Exception 
 	{
 		
-		WebTable  tRetorno = null;
+		WebTable   tRetorno = null;
 		Statement  stt = null;
 		Connection con = null;
 		try 

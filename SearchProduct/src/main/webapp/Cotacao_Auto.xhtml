@@ -12,6 +12,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<title>Caveira Bussines</title>
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet"></link> 
+	<h:outputScript library="js" name="assets/js/locale-primefaces.js"/>
+	
+<script>
+	jQuery(function(){
+	jQuery.noConflict();
+	});
+</script>
 	<style>
 body, h1 {
 	font-family: "Raleway", sans-serif
@@ -39,7 +46,7 @@ body, html {
 	color: white;
 	background: url('img/slide_2.jpg'), url('img/slide_2.jpg')  ;
 	background-position: 30% 45%;
-	overflow: hidden; 
+	/* overflow: hidden;  */
 	background-size: cover;
 }
 
@@ -101,7 +108,7 @@ body, html {
 
 
 <h:body class="bgimg">
- 
+ <p:growl id="msgs" showDetail="true" escape="false"/>
 	<div id="main" class="container-fluid" style="margin-top: 50px">
 
 		<div id="top" class="row">
@@ -110,11 +117,10 @@ body, html {
 				 
 				<h:form>
 
+  
+					<p:panel visible="true" style="  width:350px; margin-bottom:2cm; background-color: transparent !important; ">
 
-					<p:panel visible="true"
-						style="  width:350px; margin-bottom:2cm; background-color: transparent !important; ">
-
-						<h:panelGrid columns="2" cellpadding="4" cellspacing="2">
+						<h:panelGrid columns="2" cellpadding="6" cellspacing="2">
 
 							<p:outputLabel id="tipo_label" value="Tipo: " styleClass="p" />
 
@@ -175,14 +181,57 @@ body, html {
 								<f:selectItems value="#{dropdownView.anos_de}"
 									noSelectionOption="true" />
 							</h:selectOneMenu>
-							 
-						</h:panelGrid>
 
+							
+							
+							<p:outputLabel id="prazo_label" value="Prazo: " styleClass="p" />
+							
+							 
+			       <p:calendar id ="calenda" 
+			            value="#{dropdownView.selectedDate}"
+                        locale="pt_BR"
+                        styleClass=" pc"
+                        popup="#{dropdownView.popup}"
+                        datePattern="#{dropdownView.pattern}"                    
+                        cellWidth="14px" cellHeight="12px" 
+                        style="width:166px; height:20px; line-height: 15px; background-color: transparent !important;"  
+                        timeZone="GMT-3"  showOn="button"   />
+                         
+                         
+                         
+                         <p:outputLabel id="valor_label" value="Valor: " styleClass="p" />
+                          <p:inputText   id="txt3"    
+			    			   value="#{dropdownView.number3}"   effect="fade"  
+								style="height:35px; width:180px; background-color: transparent !important;"
+								styleClass="pc"  />
+                          <p:outputLabel id="valor2_label" value="" styleClass="p" />
+                          <p:slider 
+                          for="txt3" 
+                          step="100" 
+                          minValue="1000"  
+                          maxValue="1000000" 
+                          style="width:180px ;height:8px;  " range="true" displayTemplate="Between {min} and {max}" />
+                         
+						</h:panelGrid>
+ 
 						<p:separator />
 
-						<p:commandButton value="Consultar" update=":tabela_resultado"
+						<p:commandButton 
+						    value="Consultar" 
+						    update=":tabela_resultado"
 							actionListener="#{dropdownView.displayLocation}"
-							icon="ui-icon-check" styleClass="button" />
+							icon="ui-icon-check" 
+							styleClass="button" 
+							onstart="PF('statusDialog').show()" 
+							onsuccess="PF('statusDialog').hide()" />
+							
+						 
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="true" 
+							closable="false" resizable="false" showHeader="true">
+            						<h2>Aguarde...</h2>
+            						<img src="http://www.ajaxload.info/images/exemples/19.gif" alt=""/>
+							</p:dialog>
 
 					</p:panel>
 
@@ -203,54 +252,30 @@ body, html {
 			<div  style="height: 400px; overflow: auto;"  >
 		<div id="list" class="component"  style="height: 400px; width:90%; overflow: auto;"> 
  
-				<h:dataTable id="tabela_resultado"
-					value="#{dropdownView.cotacao.orderList}" 
-					var="o"
-					styleClass="tablej"  
-					style="width:90%"
-					headerClass="cabecalho"   
-					border="2" 
-					cellspacing="1"
-					cellpadding="1"  > 
-	
-    			<h:column > 
-						<f:facet name="header">Tipo Veiculo</f:facet> 
-						<h:outputText value="#{o.tipo_veiculo}" style="font-weight: bold; color: black ; background-color: #FFFFFF; "/>
-    				
-    			</h:column>
-
-				<h:column>
-						<f:facet name="header">Marca</f:facet>
-						<h:outputText value="#{o.marca}" style="background:Snow; color: black ; background-color: #FFFFFF;  "/>
-    				
-    			</h:column>
-
-					<h:column>
-						<f:facet name="header">Modelo</f:facet>
-						<h:outputText value="#{o.modelo}" style="color: black ; background-color: #FFFFFF; "/>
-    				
-    			</h:column>
-
-					<h:column >
-						<f:facet name="header">Combustivel</f:facet>
-						<h:outputText value="#{o.combustivel}" style="background:pink ; background-color: transparent !important; "/>
-    				
-    			</h:column>
-
-					<h:column>
-						<f:facet name="header">Preco</f:facet>
-						<h:outputText value="#{o.preco}" style="color: black ; width:125px;  background-color: transparent !important; "/>
-    				
-    			</h:column>
-
-					<h:column>
-						<f:facet name="header">Ano Modelo</f:facet>
-						<h:outputText value="#{o.ano_modelo}" style="color: black ; background-color: #FFFFFF; "/>
-    				
-    			</h:column>
-
-				</h:dataTable> 
-			 
+ 		 <p:treeTable  id="tabela_resultado" 
+ 		 value="#{dropdownView.cotacao.root1}" 
+ 		 var="document" 
+ 		 selectionMode="single" 
+ 		 selection="#{ttSelectionView.selectedNode}" style="margin-top:0">
+        
+        <p:column headerText="Name">
+            <h:outputText value="#{document.modelo}" />
+        </p:column>
+        <p:column headerText="Size">
+            <h:outputText value="#{document.marca}" />
+        </p:column>
+        <p:column headerText="Type">
+            <h:outputText value="#{document.preco}" />
+        </p:column>
+    </p:treeTable>
+    
+ 
+				
+			 <br/>
+	 <br/>
+	 <br/>
+	 
+	 	<p:separator />
 </div>
 		</div>
 		 
@@ -258,7 +283,7 @@ body, html {
 	 
 	 
 
-	<script src="js/jquery.min.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
 

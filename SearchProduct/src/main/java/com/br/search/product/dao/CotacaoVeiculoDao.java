@@ -5,8 +5,11 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.br.search.product.Cotacao;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
+
 import com.br.search.product.Cotacao.CotacaoVeiculo;
+import com.br.search.product.tabela.SelectionView;
 import com.br.search.product.util.MarcaVeiculo;
 import com.br.search.product.util.ModeloAnoVeiculo;
 import com.br.search.product.util.ModeloVeiculo;
@@ -149,7 +152,7 @@ public class CotacaoVeiculoDao
 			return listaMarca;
 		}
 	
-	  public static void getDetalhes(Cotacao cotacao,int iTipo, String sMarca, String sModelo, String sAnode ,String sAnoAte,String sValorDe,String sValorAte) throws Exception
+	  public static void getDetalhes(SelectionView cotacao,int iTipo, String sMarca, String sModelo, String sAnode ,String sAnoAte,String sValorDe,String sValorAte) throws Exception
 	  {
 		  
 		 StringBuffer sbQuery = new StringBuffer();
@@ -208,18 +211,52 @@ public class CotacaoVeiculoDao
 		
 		int iNumLinhas = tabela.getNumLinha();
 		
-		CotacaoVeiculo[] m_cotacao = new CotacaoVeiculo[iNumLinhas];
-		
-		
 		DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols (new Locale ("pt", "BR")));
+		
 		formatoDois.setMinimumFractionDigits(2); 
+		
 		formatoDois.setParseBigDecimal (true);
+		
+		
+		TreeNode root  = cotacao.getRoot1();
+		
+		String nome_modelo = "";
+		 
+		
 		for(int i = 0; i < iNumLinhas; i++)
 		{
-			m_cotacao[i]= new CotacaoVeiculo(tabela.getString("tipo_veiculo", i),tabela.getString("marca", i),tabela.getString("modelo", i),tabela.getString("combustivel", i), formatoDois.format(tabela.getDouble("preco", i))  ,tabela.getString("ano_modelo", i));
+			if(i==0)
+			{
+				root = new DefaultTreeNode(new CotacaoVeiculo(tabela.getString("tipo_veiculo", i),tabela.getString("marca", i),tabela.getString("modelo", i),tabela.getString("combustivel", i), formatoDois.format(tabela.getDouble("preco", i))  ,tabela.getString("ano_modelo", i)),null);
+			}
+			else
+			{ 
+				if(!nome_modelo.equals(tabela.getString("modelo", i)))
+				{
+					nome_modelo = tabela.getString("modelo", i);
+					 
+					TreeNode prisma = new DefaultTreeNode(new CotacaoVeiculo("",tabela.getString("marca", i),tabela.getString("modelo", i),"", ""  ,""), root);
+					
+					loop : for(int j = i; j < iNumLinhas; j++)
+					{
+						if(nome_modelo.equals(tabela.getString("modelo", j)))
+						{
+							nome_modelo = tabela.getString("modelo", i);
+							
+							new DefaultTreeNode(new CotacaoVeiculo(tabela.getString("tipo_veiculo", j),tabela.getString("marca", j),tabela.getString("modelo", j),tabela.getString("combustivel", j), formatoDois.format(tabela.getDouble("preco", j))  ,tabela.getString("ano_modelo", j)), prisma);			
+						}
+						else
+						{
+							i=j;
+						
+							break loop;
+						}
+					}
+				}
+			}
 		}
 		
-		cotacao.setOrderList(m_cotacao);
+		cotacao.setRoot1(root);
 		  
 	  } 
 

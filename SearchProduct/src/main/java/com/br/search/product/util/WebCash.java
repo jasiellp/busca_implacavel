@@ -54,7 +54,7 @@ public class WebCash
 		        cpds.setAcquireIncrement(1);
 		        cpds.setMaxPoolSize(10); 
 		        cpds.setMaxStatements(50); 
-		        cpds.setCheckoutTimeout(18000); 
+		        cpds.setCheckoutTimeout(20000); 
 		        cpds.setMaxIdleTime(900);
 		        cpds.setIdleConnectionTestPeriod(3000); 
 		        

@@ -17,6 +17,21 @@
 	</url-mapping>
 
  
-
+     <url-mapping id="teste">
+		<pattern value="/teste" />
+		<view-id value="/teste.jsf" />
+	</url-mapping>
+	
+	 <url-mapping id="demo">
+		<pattern value="/demo" />
+		<view-id value="/demo.jsf" />
+	</url-mapping>
+	
+		 <url-mapping id="user">
+		<pattern value="/user" />
+		<view-id value="/user.jsf" />
+	</url-mapping>
+ 
+ 
 	 
 </pretty-config>
