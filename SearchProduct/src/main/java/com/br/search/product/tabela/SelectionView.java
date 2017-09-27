@@ -1,5 +1,6 @@
 package com.br.search.product.tabela;
 
+
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;

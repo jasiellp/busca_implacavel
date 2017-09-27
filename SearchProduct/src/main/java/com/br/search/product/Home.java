@@ -26,7 +26,7 @@ public class Home implements Serializable
 	
 	  
 	private double number3 =  10000.0d;
-	public String pattern;
+	public String  pattern = "DD MM, YYYY";;
 	
 	public Date selectedDate = new Date();
 	

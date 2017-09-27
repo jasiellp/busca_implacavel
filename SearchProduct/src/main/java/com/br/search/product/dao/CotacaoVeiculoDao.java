@@ -195,15 +195,15 @@ public class CotacaoVeiculoDao
 			sbQuery.append(" and modelo.ano <= '").append(sAnoAte).append("' \n");
 		}
 		
-		/*if(!sValorDe.trim().equals(""))
+		/* if(!sValorDe.trim().equals(""))
 		{
 			sbQuery.append(" and modelo.preco >= '").append(sValorDe).append("' \n");
-		}
+		}*/
 		
 		if(!sValorAte.trim().equals(""))
 		{
-			sbQuery.append(" and modelo.preco  <= '").append(sValorAte).append("' \n");
-		}*/
+			sbQuery.append(" and CAST(coalesce(modelo.preco, '0') AS decimal)   <= ").append(sValorAte).append(" \n");
+		} 
 
 		sbQuery.append("  order by  modelo.nome,modelo.ano;").append("  \n");
 		
@@ -219,7 +219,7 @@ public class CotacaoVeiculoDao
 		
 		
 		TreeNode root  = cotacao.getRoot1();
-		
+		root = null;
 		String nome_modelo = "";
 		 
 		

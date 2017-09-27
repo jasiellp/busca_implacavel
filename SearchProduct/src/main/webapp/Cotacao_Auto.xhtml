@@ -39,8 +39,8 @@ body, html {
 	color: #d3d3d3;
 }
 .bgimg {
-	display: table;
-	width: 100%;
+	 
+	width:  100%;
 	height: 100vh;
 	padding: 100px 0;
 	color: white;
@@ -48,6 +48,9 @@ body, html {
 	background-position: 30% 45%;
 	/* overflow: hidden;  */
 	background-size: cover;
+	
+	 
+	   
 }
 
 .menu .ui-selectonemenu-label {
@@ -68,7 +71,7 @@ body, html {
 .pc {
 	font-family: "DIN Neuzeit Grotesk", Georgia, Serif;
 	font-size: 16px;
-	color: #29D832;
+	color: black;
 	font-weight: bold;
 	font-style: normal;
 }
@@ -115,20 +118,22 @@ body, html {
 		
 			<div class="col-sm-3">
 				 
+				 
+				 
 				<h:form>
 
   
-					<p:panel visible="true" style="  width:350px; margin-bottom:2cm; background-color: transparent !important; ">
+					<p:panel visible="true" style="  width:350px; margin-bottom:2cm; background-color: #9400D3; ">
 
 						<h:panelGrid columns="2" cellpadding="6" cellspacing="2">
 
 							<p:outputLabel id="tipo_label" value="Tipo: " styleClass="p" />
 
 							<h:selectOneMenu id="tipo" value="#{dropdownView.tipo}"
-								style="height:35px; width:180px; background-color: transparent !important;"
+								style="height:35px; width:180px;  "
 								styleClass="form-control; pc">
 								<p:ajax listener="#{dropdownView.onTipoChange}"
-									update="marca, modelo, ano_de_" />
+									update="marca, modelo, ano_de_, :tabela_resultado" />
 								<f:selectItem itemLabel="Selecione" itemValue=""
 									noSelectionOption="true" />
 								<f:selectItems value="#{dropdownView.tipos}" />
@@ -138,10 +143,10 @@ body, html {
 							<p:outputLabel id="marca_label" value="Marca: " styleClass="p" />
 							<h:selectOneMenu id="marca" value="#{dropdownView.marca}"
 								effect="fade" var="p"
-								style="height:35px; width:180px; background-color: transparent !important;"
+								style="height:35px; width:180px;  "
 								styleClass="form-control; pc">
 								<p:ajax listener="#{dropdownView.onMarcaChange}"
-									update="modelo, ano_de_" />
+									update="modelo, ano_de_, :tabela_resultado" />
 								<f:selectItem itemLabel="Selecione" itemValue=""
 									noSelectionOption="true" />
 								<f:selectItems value="#{dropdownView.marcas}" />
@@ -150,10 +155,10 @@ body, html {
 							<p:outputLabel id="modelo_label" value="Modelo: " styleClass="p" />
 							<h:selectOneMenu id="modelo" value="#{dropdownView.modelo}"
 								effect="fade" var="p"
-								style="height:35px; width:180px; background-color: transparent !important;"
+								style="height:35px; width:180px;  "
 								styleClass="form-control; pc">
 								<p:ajax listener="#{dropdownView.onModeloChange}"
-									update="ano_de_, ano_ate_" />
+									update="ano_de_, ano_ate_ , :tabela_resultado" />
 								<f:selectItem itemLabel="Selecione" itemValue=""
 									noSelectionOption="true" />
 								<f:selectItems value="#{dropdownView.modelos}" />
@@ -163,7 +168,7 @@ body, html {
 							<p:outputLabel id="ano_de_label" value="Ano De: " styleClass="p" />
 							<h:selectOneMenu id="ano_de_" value="#{dropdownView.ano_de}"
 								effect="fade" var="q"
-								style="height:35px; width:180px; background-color: transparent !important;"
+								style="height:35px; width:180px;  "
 								styleClass="form-control; pc">
 
 								<f:selectItem itemLabel="Selecione" itemValue="" />
@@ -175,7 +180,7 @@ body, html {
 								styleClass="p" />
 							<h:selectOneMenu id="ano_ate_" value="#{dropdownView.ano_ate}"
 								effect="fade" var="q"
-								style="height:35px; width:180px; background-color: transparent !important;"
+								style="height:35px; width:180px;  "
 								styleClass="form-control; pc">
 								<f:selectItem itemLabel="Selecione" itemValue="" />
 								<f:selectItems value="#{dropdownView.anos_de}"
@@ -194,7 +199,7 @@ body, html {
                         popup="#{dropdownView.popup}"
                         datePattern="#{dropdownView.pattern}"                    
                         cellWidth="14px" cellHeight="12px" 
-                        style="width:166px; height:20px; line-height: 15px; background-color: transparent !important;"  
+                        style="width:166px; height:20px; line-height: 15px;  "  
                         timeZone="GMT-3"  showOn="button"   />
                          
                          
@@ -202,13 +207,13 @@ body, html {
                          <p:outputLabel id="valor_label" value="Valor: " styleClass="p" />
                           <p:inputText   id="txt3"    
 			    			   value="#{dropdownView.number3}"   effect="fade"  
-								style="height:35px; width:180px; background-color: transparent !important;"
-								styleClass="pc"  />
+								style="height:35px; width:180px;  "
+								styleClass="form-control; pc" />
                           <p:outputLabel id="valor2_label" value="" styleClass="p" />
                           <p:slider 
                           for="txt3" 
                           step="100" 
-                          minValue="1000"  
+                          minValue="10000"  
                           maxValue="1000000" 
                           style="width:180px ;height:8px;  " range="true" displayTemplate="Between {min} and {max}" />
                          
@@ -258,13 +263,13 @@ body, html {
  		 selectionMode="single" 
  		 selection="#{ttSelectionView.selectedNode}" style="margin-top:0">
         
-        <p:column headerText="Name">
+        <p:column headerText="Modelo">
             <h:outputText value="#{document.modelo}" />
         </p:column>
-        <p:column headerText="Size">
+        <p:column headerText="Marca">
             <h:outputText value="#{document.marca}" />
         </p:column>
-        <p:column headerText="Type">
+        <p:column headerText="Preço">
             <h:outputText value="#{document.preco}" />
         </p:column>
     </p:treeTable>
@@ -276,15 +281,28 @@ body, html {
 	 <br/>
 	 
 	 	<p:separator />
+	 	
+	 	 
+	 	<!-- 
+	  		      <p:chart type="line" model="#{chartView.lineModel1}" style="height:300px;"/>
+ 
+				<p:chart type="line" model="#{chartView.lineModel2}" style="height:300px;"/>   -->
+		
+		<p:separator />
 </div>
 		</div>
 		 
 	</div>
 	 
 	 
-
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.poptrox.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/ie/respond.min.js"></script> 
 
 
 </h:body>

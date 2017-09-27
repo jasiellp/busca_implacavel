@@ -96,7 +96,7 @@ public class DropdownView implements Serializable
 			}
 		 	 
 		     this.popup = true;
-		     this.pattern = "MMM d, yyyy";
+		     this.pattern = "DD MM, YYYY";
 		     
 		     number3 =  (double) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("number3");
 		     selectedDate =(Date) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDate");
@@ -620,7 +620,7 @@ public class DropdownView implements Serializable
 		{
 			try
 			{
-				CotacaoVeiculoDao.getDetalhes( cotacao, 1, marca, modelo, ano_de, ano_ate, String.valueOf(valor_de), String.valueOf(valor_ate));
+				CotacaoVeiculoDao.getDetalhes( cotacao, 1, marca, modelo, ano_de, ano_ate, String.valueOf(number3), String.valueOf(number3));
 			} catch (Exception e)
 			{
 
@@ -631,7 +631,7 @@ public class DropdownView implements Serializable
 			try
 			{
 				CotacaoVeiculoDao.getDetalhes(
-				        cotacao, 2, marca, modelo, ano_de, ano_ate, String.valueOf(valor_de), String.valueOf(valor_ate)
+				        cotacao, 2, marca, modelo, ano_de, ano_ate, String.valueOf(number3), String.valueOf(number3)
 				);
 			} catch (Exception e)
 			{
@@ -643,7 +643,7 @@ public class DropdownView implements Serializable
 			try
 			{
 				CotacaoVeiculoDao.getDetalhes(
-				        cotacao, 3, marca, modelo, ano_de, ano_ate, String.valueOf(valor_de), String.valueOf(valor_ate)
+				        cotacao, 3, marca, modelo, ano_de, ano_ate, String.valueOf(number3), String.valueOf(number3)
 				);
 			} catch (Exception e)
 			{

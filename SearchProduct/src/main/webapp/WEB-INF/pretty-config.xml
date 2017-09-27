@@ -5,33 +5,36 @@
 	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
 
 
- 	<url-mapping id="index">
-        <pattern value="/" />
-        <view-id value="/index.jsf" />
-    </url-mapping>
-	 
+	<url-mapping id="index">
+		<pattern value="/" />
+		<view-id value="/index.jsf" />
+	</url-mapping>
+
 
 	<url-mapping id="Cotacao_Auto">
 		<pattern value="/cotacao" />
 		<view-id value="/Cotacao_Auto.jsf" />
 	</url-mapping>
 
- 
-     <url-mapping id="teste">
+
+	<url-mapping id="teste">
 		<pattern value="/teste" />
 		<view-id value="/teste.jsf" />
 	</url-mapping>
-	
-	 <url-mapping id="demo">
+
+	<url-mapping id="demo">
 		<pattern value="/demo" />
 		<view-id value="/demo.jsf" />
 	</url-mapping>
-	
-		 <url-mapping id="user">
+
+	<url-mapping id="user">
 		<pattern value="/user" />
 		<view-id value="/user.jsf" />
 	</url-mapping>
- 
- 
-	 
+
+	<url-mapping id="investimento">
+		<pattern value="/investimento" />
+		<view-id value="/investimento.jsf" />
+	</url-mapping>
+
 </pretty-config>
