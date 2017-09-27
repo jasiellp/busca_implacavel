@@ -51,7 +51,7 @@ public class CarService
 		{
 			list.add(
 			        new Car(
-			                getRandomId(), "Renda Fixa", "CDB-Pre", "9.75", 365, "03-03-1990", "03-03-2020", 12, "1000",
+			                getRandomId(), "Renda Fixa", "CDB-Pre", String.valueOf(Math.random()), 365, "03-03-1990", "03-03-2020", 12, "1000",
 			                "35000"
 			        )
 			);

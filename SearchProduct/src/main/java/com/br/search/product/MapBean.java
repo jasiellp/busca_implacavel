@@ -58,9 +58,36 @@ public class MapBean implements Serializable
 
 	public void setSelectedCar(Car selectedCar)
 	{ 
-		 System.out.println("setSelectedCars");
+		
 		 
-		 valorFeliz=" google.visualization.arrayToDataTable( [['Ano', 'Sales', 'Expenses'],  ['2010',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",43],['2011',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",55],['2012',64,50], ['2013',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",43],['2014',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",55],['2015',64,50]   ]  ) ";
+		 String valor = "";
+		 double tx = Double.parseDouble( selectedCar.taxa);
+		 
+		 
+		 double valor_aplicado = 1200,
+				 valor_liquido  = 0,
+				 valor_bruto = 0;
+		 valorFeliz=" google.visualization.arrayToDataTable( [['Mes', 'Valor Bruto', 'Valor Liquido'], ";
+		 
+		 for(int i = 1; i <= 12 ; i++ )
+		 {
+			 valor_aplicado=valor_aplicado+(valor_aplicado*tx);
+			 
+			 valor_bruto= valor_aplicado;
+			 
+			 valor_liquido=valor_bruto-(valor_bruto*Math.random());
+			 
+			 if(i==12)
+				 valor = " ['"+i+"',"+valor_bruto +","+valor_liquido+"] ";
+			 else
+				 valor = " ['"+i+"',"+valor_bruto +","+valor_liquido+"] ,";
+			 
+			 valorFeliz+=valor;
+		 }
+		 valorFeliz+="]  ) ";
+		 
+		 
+		// valorFeliz=" google.visualization.arrayToDataTable( [['Ano', 'Sales', 'Expenses'],  ['.',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",43],['.',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",55],['.',64,50], ['.',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",43],['.',"+String.valueOf((Math.random()*100)/1000).replace(".", "") +",55],['.',64,50]   ]  ) ";
 		 
 		 RequestContext.getCurrentInstance().execute("drawChartl("+valorFeliz+");");
   		 

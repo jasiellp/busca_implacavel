@@ -15,16 +15,13 @@
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet"></link>
 	<h:outputScript library="js" name="assets/js/locale-primefaces.js" />
 	
-    
-	<style>
+<style>
 .bgimg {
-	width: 100%;
-	height: 100vh;
+	width:  100%;
+	height: 90vh;
 	padding: 100px 0;
 	color: white;
-	background:
-		url('http://st2.depositphotos.com/2673929/10577/i/950/depositphotos_105778852-stock-photo-cork-table-notebook-coffee-calculator.jpg'),
-		url('http://luciliadiniz.com/wp-content/uploads/2014/04/Calculadora-mostra-o-quanto-o-cafe-engorda.jpg');
+	background: url('img/slide_2.jpg'), url('img/slide_2.jpg')  ;
 	background-position: 30% 45%;
 	/* overflow: hidden;  */
 	background-size: cover;
@@ -42,16 +39,10 @@
 } 
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
-    <!--  <script type="text/javascript">
-	 function jasielLindo() 
-     {
-		 alert('deu certo!');
-     }
-	 </script> -->
+     
     <script type="text/javascript"    >
       google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawChartl);
    
       
       var data = null; 
@@ -64,10 +55,7 @@
       };
       
       function drawChartl(meu_array) 
-      {
-    	  
-    	    alert("Oi tudo bem"+meu_array);
-    	  
+      { 
     	 
     	  data = meu_array; 
     	  
@@ -76,59 +64,16 @@
           chart.draw(data, options);
       }
       
-      
-      function drawChart( ) 
-      {
-    	   // alert("Oi tudo bem"+#{mapBean.pieChartData});
-    	   
-    	    data = google.visualization.arrayToDataTable(
-    	        [
-    	          ['Ano', 'Sales', 'Expenses'],
-    	          #{mapBean.pieChartData} 
-    	        ]);
-    	    
-        
-
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(data, options);
-      }
-    </script>
-    
-      <script>
-      function j_lindo() 
-      {
-    	  alert("Hello! I am an alert box!!");
-    	  
-
-      }
-      </script>
-      <h:outputScript  id="teste_feliz" >
-        function afterLoad() {    
-            alert("#{statusBean.size}");
-        }
-    </h:outputScript>
+     
+    </script> 
+       
 </h:head>
-
-
-
-
 <h:body class="bgimg">
-
- 
-
-
-	<p:growl id="msgs" showDetail="true" escape="false" />
+	 
 	<div id="main" class="container-fluid" style="margin-top: 50px">
- 
- 
- 	
-    
-     <div id="chart_div" style="width: 1200px; height: 800px;margin: 0 auto;"></div>
-		<div id="top" class="row">
-
-			<div class="col-sm-3"> 
-  				<div id="curve_chart" style="width: 900px; height: 500px"   />
+  
+			 
+  				<div id="curve_chart" style="width: 1000px; height: 500px"   />
 				<h:form id="form">
 				
 				
@@ -179,10 +124,17 @@
 						</p:column>
 						
 					</p:dataTable>
+					
+						<p:commandButton 
+						    value="Aplicar" 
+					 
+							icon="ui-icon-check" 
+							styleClass="button" 
+							  />
 
 				</h:form>
-			</div>
-		</div>
+			 
+		 
 	</div>
 
 
