@@ -2,7 +2,6 @@ package com.br.search.product;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -98,11 +97,13 @@ public class DropdownView implements Serializable
 			}
 		 	 
 		     this.popup = true;
+		     
 		     this.pattern = "DD MM, YYYY";
 		     
 		     number3 =  (double) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("number3");
+		    
 		     selectedDate =(Date) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDate");
-		     System.out.println("JASIEL LINDO "+number3);
+		    
 		     
 		}
 		catch (Exception e)
@@ -719,7 +720,7 @@ public class DropdownView implements Serializable
 	{
 		this.pattern = pattern;
 	}
-	public Date getSelectedDaaate()
+	public Date getSelectedDate()
 	{
 		return selectedDate;
 	}
