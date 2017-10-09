@@ -719,7 +719,7 @@ public class DropdownView implements Serializable
 	{
 		this.pattern = pattern;
 	}
-	public Date getSelectedDate()
+	public Date getSelectedDaaate()
 	{
 		return selectedDate;
 	}
