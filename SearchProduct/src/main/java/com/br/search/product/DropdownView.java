@@ -1,6 +1,8 @@
 package com.br.search.product;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -738,4 +740,11 @@ public class DropdownView implements Serializable
 		this.number3 = number3;
 	}
 
+	
+	public void redirect() throws IOException 
+	{	  
+		 
+	     
+	    FacesContext.getCurrentInstance().getExternalContext().redirect("investimento");
+	}
 }

@@ -86,10 +86,7 @@ public class Home implements Serializable
  
 	
 	public void redirect() throws IOException 
-	{
-	   
-		
-		  
+	{	  
 		SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
 		System.out.println(dt1.format(selectedDate));
 		System.out.println("Jasiel Voce é lindao"+  number3);
